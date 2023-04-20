@@ -39,7 +39,7 @@ This plot shows that patients with presumably higher stressful occupations are a
 - Data Transformation: Using transformers and pipelines for preprocessing
 - Hyperparameter Tuning Using GridSearchCV: 
     RandomForest - max_depth, n_estimators, max_features, class_weight
-    XGBoost - n_neighbors, p value, weights
+    XGBoost - booster, eta, max_depth
 
 - Feature Extraction with PCA
 - Evaluating a RandomForest Classifier and a XGBoostClassifier's ability to predict stroke using a multiclass classification report **while prioritizing recall scores.** 
