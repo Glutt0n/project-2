@@ -1,6 +1,6 @@
 # Stroke Prediction
  The goal of this is to help the stakeholders understand in what way the data does or does not help to predict a stroke in patients.
-## KNeighborsClassifier vs. LogisticRegression Models
+## RandomForestClassifier vs. XGBoostClassifier Models
 
 **Author**:Leard Russell 
 
@@ -38,36 +38,36 @@ This plot shows that patients with presumably higher stressful occupations are a
 - Validation Split: splitting data to prepare it for machine learning
 - Data Transformation: Using transformers and pipelines for preprocessing
 - Hyperparameter Tuning Using GridSearchCV: 
-    KNN - n_neighbors, p value, weights
-    LogisticRegression - solver, penalty, C value
+    RandomForest - max_depth, n_estimators, max_features, class_weight
+    XGBoost - n_neighbors, p value, weights
+
 - Feature Extraction with PCA
-- Evaluating a KNeighbors Classifier model and a LogisticRegression model's ability to predict stroke using multiclass classification report **while prioritizing recall scores.** 
+- Evaluating a RandomForest Classifier and a XGBoostClassifier's ability to predict stroke using a multiclass classification report **while prioritizing recall scores.** 
 
 
 #### Best Model Metrics:
-**(Default) KNeighbors Classifier:**
+**(Default) RandomForest Classifier:**
 • Results for training data:
-  - Accuracy = 0.96
-  - Precision = 0.03
-  - Recall = 0.06
+  - Accuracy = 1.00
+  - Precision = 1.00
+  - Recall = 1.00
   
 • Results for test data:
   - Accuracy = 0.95
-  - Precision = 0.03
-  - Recall = 0.06
+  - Precision = 0.50
+  - Recall = 0.02
 
 
-If I were to choose a model of the two utilized, I would have choose the default KNeighborsClassifier for the data.
-I'd choose this due to the model having the highest of all metrics, but most importantly the highest recall. The model with the highest recall, in the context of the data, is going to be the one with the least amount of false negatives. Less false negatives means less patients deemed "likely to get stroke." 
+The model with the better scores, in the context of our business problem, is going to be the one with the least amount of false negatives without also sacrificing too many false positives. Less false negatives means less patients deemed "likely to have stroke." *If I were to choose a model of the two utilized, I would choose the tuned RandomForestClassifier.* I'd choose this due to the model having the highest scores overall, It's recall is 0.01 less than that of the XGB model but the precision is much higher at 0.50. In other words, the recall in both models is essentially identical so the higher precision is the deal-breaker.
 
-When comparing both our KNeighborsClassifier model and our LogisticRegression model, after tuning multiple hyperparameters for each using GridSearchCV, and after completing feature extraction using PCA we see that there is no significant change in metrics, especially in our poorest performing metrics, recall and precision. In fact, our recall scores in our test set actually dropped from 0.06 in the default KNN Model to 0.03 after hyperperamater tuning. After applying PCA with 10 components, it dropped to 0.
+When comparing both our RandomForest model and our XGBoost  model, after tuning multiple hyperparameters  using GridSearchCV, and after performing feature extraction using PCA we see that there is no significant change in metrics, especially in our poorest performing metrics (precision and recall). In fact, our recall scores in our test set actually decreased in both models after hyperperamater tuning. After applying PCA with 9 components, metrics decreased even further.
 
-One major takeaway from the data is that there simply isn't high enough correlation between individual features and between features and our 'stroke' target for any model to demonstrate any predictive ability. This is evident in the extremely low recall scores(our most important metrics for the data). With low recall scores like these, there would be a dangerously large amount of patients that wouldn't be considered at risk for stroke when they actually are. 
+One major takeaway from the data is that there simply isn't high enough correlation between features and between features and our target to for any model to demonstrate any significant predictive power. This is evident in our correlation heatmap towards the beginning of the notebook. And further shown through our extremely low recall scores(our most important metrics for the data) in literally all of our models with tuning and feature extraction. With low recall scores like these, there would be a dangerously large amount of patients that wouldn't be considered at risk for stroke when they actually are. 
 
 ## Recommendations:
 
-• Considering all models with and without tuning, if one absolutely had to be implemented, I would have to recommend using the default KNeighbors Classifier simply due to it having the *highest* recall scores.
+• Considering all models with and without tuning, if one absolutely had to be implemented, I would have to recommend using the default RandomForest Classifier simply due to it having nearly identical recall scores to that of the XGBoost model, while having significantly higher precision.
 
-• Another strong recommendation to stakeholders is to gather more data with features that at the very least provide a moderate correlation to our 'stroke' target so that a machine learning model can actually learn from the data. Both the KNN and LogReg model had poor metrics even after having multiple hyperparameters tuned in addition to feature extraction using PCA. This demonstrates a lack of predictive more so in the data than from the models. More *quality* data is needed. 
+• Another strong recommendation to stakeholders is to gather more data with features that at the very least provide a moderate correlation to our 'stroke' target so that a machine learning model can actually learn from the data. Our features had very little correlation to each other, as shown by our heatmap. Both the RandomForest and XGB model had extremely poor metrics even after having multiple hyperparameters tuned in addition to feature extraction using PCA. This demonstrates a lack of predictive more so in the data than from the models. More *quality* data is needed. 
 
 For any additional questions, please contact **leardrussell@gmail.com**
